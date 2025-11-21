@@ -1,4 +1,4 @@
-<!doctype html>
+w<!doctype html>
 <html lang="en">
 
 <head>
@@ -52,16 +52,96 @@
         </div>
     @else
         {{-- NAVBAR PUBLIC --}}
-        <nav class="navbar navbar-light bg-white shadow-sm px-4 py-3 mb-4">
-            <div class="d-flex align-items-center gap-3">
+        {{-- NAVBAR PUBLIC --}}
+        {{-- NAVBAR PUBLIC (UNTUK HALAMAN TANPA LOGIN / FULLPAGE) --}}
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-4 py-3 mb-4">
+            <div class="container-fluid">
 
-                <img src="{{ asset('assets/images/logos/Logo-Polbeng.png') }}" alt="Logo"
-                    style="height: 40px; width: auto;">
+                {{-- LOGO --}}
+                <div class="d-flex align-items-center gap-3">
+                    <img src="{{ asset('assets/images/logos/Logo-Polbeng.png') }}" alt="Logo"
+                        style="height: 40px; width: auto;">
+                    <h4 class="fw-bold mb-0">POLITEKNIK NEGERI BENGKALIS</h4>
+                </div>
 
-                <h4 class="fw-bold mb-0">POLITEKNIK NEGERI BENGKALIS</h4>
+                {{-- TOGGLER RESPONSIVE --}}
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#publicNavbar"
+                    aria-controls="publicNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
+                {{-- MENU RIGHT --}}
+                <div class="collapse navbar-collapse justify-content-end" id="publicNavbar">
+
+                    @auth
+                        {{-- =======================================================
+                     USER SUDAH LOGIN → TAMPILKAN DROPDOWN USER
+                ======================================================= --}}
+                        <div class="dropdown">
+                            <a class="d-flex align-items-center text-decoration-none dropdown-toggle" href="#"
+                                role="button" id="publicUserMenu" data-bs-toggle="dropdown" aria-expanded="false">
+
+                                <img src="{{ asset('assets/images/profile/user-1.jpg') }}" width="40" height="40"
+                                    class="rounded-circle me-2">
+
+                                <span class="fw-semibold">{{ Auth::user()->name }}</span>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="publicUserMenu">
+
+                                {{-- ===============================================
+                             DASHBOARD SESUAI ROLE USER
+                        =============================================== --}}
+                                @if (Auth::user()->role === 'admin')
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
+                                            Dashboard Admin
+                                        </a>
+                                    </li>
+                                @elseif (Auth::user()->role === 'user')
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('user.dashboard') }}">
+                                            Dashboard Saya
+                                        </a>
+                                    </li>
+                                @endif
+
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+
+                                {{-- ===============================================
+                                LOGOUT
+                        =============================================== --}}
+                                <li>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button class="dropdown-item text-danger fw-semibold" type="submit">
+                                            Logout
+                                        </button>
+                                    </form>
+                                </li>
+
+                            </ul>
+                        </div>
+                    @else
+                        {{-- =======================================================
+                        USER BELUM LOGIN → TAMPILKAN MASUK & DAFTAR
+                ======================================================= --}}
+                        <a href="{{ route('login') }}" class="btn btn-primary me-2">
+                            Masuk
+                        </a>
+
+                        <a href="{{ route('register') }}" class="btn btn-outline-primary">
+                            Daftar
+                        </a>
+                    @endauth
+
+                </div>
             </div>
         </nav>
+
+
 
         <div class="container-fluid pb-4">
             @yield('content')

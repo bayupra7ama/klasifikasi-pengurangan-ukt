@@ -176,3 +176,79 @@ document.addEventListener("DOMContentLoaded", function () {
         chartDtksSktm
     ).render();
 });
+
+async function logoutFetch() {
+    const token = document
+        .querySelector('meta[name="csrf-token"]')
+        ?.getAttribute("content");
+
+    try {
+        const res = await fetch("{{ url('/logout') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": token,
+            },
+            credentials: "same-origin",
+        });
+
+        if (res.ok) {
+            // redirect after logout
+            window.location.href = "{{ url('/') }}";
+        } else {
+            console.error("Logout failed", res.status);
+            alert("Logout gagal");
+        }
+    } catch (e) {
+        console.error(e);
+        alert("Terjadi kesalahan saat logout");
+    }
+}
+const prodiData = {
+    "Teknik Perkapalan": [
+        "D3 - Teknik Perkapalan",
+        "D4 - Teknologi Rekayasa Aristektur Perkapalan",
+    ],
+    "Teknik Mesin": [
+        "D3 - Teknik Mesin",
+        "D4 - Teknik Mesin Produksi dan Perawatan",
+    ],
+    "Teknik Elektro": ["D3 - Teknik Elektronika", "D4 - Teknik Listrik"],
+    "Teknik Sipil": [
+        "D3 - Teknik Sipil",
+        "D4 - Teknik Perancangan Jalan Dan Jembatan",
+    ],
+    "Administrasi Niaga": [
+        "D4 - Bisnis Digital",
+        "D4 - Administrasi Bisnis Internasional",
+        "D4 - Akuntansi Keuangan Publik",
+    ],
+    "Teknik Informatika": [
+        "D3 - Teknik Informatika",
+        "D4 - Rekayasa Perangkat Lunak",
+        "D4 - Keamanan Sistem Informasi",
+    ],
+    Bahasa: [
+        "D3 - Bahasa Inggris",
+        "D4 - Bahasa Inggris Untuk Komunikasi Bisnis Dan Profesional",
+    ],
+    Kemaritiman: ["D3 - Nautika", "D3 - Ketatalaksanaan Pelayaran Niaga"],
+};
+
+document.getElementById("jurusan").addEventListener("change", function () {
+    let jurusan = this.value;
+    let prodi = document.getElementById("prodi");
+    prodi.innerHTML = '<option value="">Pilih Prodi</option>';
+
+    if (prodiData[jurusan]) {
+        prodiData[jurusan].forEach((p) => {
+            prodi.innerHTML += `<option value="${p}">${p}</option>`;
+        });
+    }
+});
+
+// Format Rupiah Input
+document.getElementById("penghasilan").addEventListener("input", function () {
+    let val = this.value.replace(/\D/g, "");
+    this.value = new Intl.NumberFormat("id-ID").format(val);
+});

@@ -24,17 +24,10 @@
                 <div class="card-body">
                     <h5 class="card-title fw-semibold mb-4">Total Pengajuan</h5>
                     <h2 class="fw-bold">{{ $totalPengajuan }}</h2>
-                    <a href="{{ route('admin.pengajuan.list') }}" class="mt-3 d-inline-block">Selengkapnya →</a>
+                    <a href="{{ route('admin.pengajuan.riwayat') }}" class="mt-3 d-inline-block">Selengkapnya →</a>
                 </div>
             </div>
 
-            <div class="card w-100">
-                <div class="card-body">
-                    <h5 class="card-title fw-semibold mb-4">Status Kelayakan</h5>
-                    <div id="chart_layak"></div>
-                    <a href="{{ route('admin.pengajuan.statistik') }}" class="mt-3 d-inline-block">Selengkapnya →</a>
-                </div>
-            </div>
         </div>
 
         {{-- Line Chart Kecil --}}

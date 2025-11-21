@@ -1,3 +1,6 @@
-<div>
-    <!-- Walk as if you are kissing the Earth with your feet. - Thich Nhat Hanh -->
-</div>
+<script>
+    // contoh inisialisasi sidebar toggle
+    document.getElementById('sidebarCollapse')?.addEventListener('click', function() {
+        document.getElementById('main-wrapper')?.classList.toggle('collapsed-sidebar');
+    });
+</script>
