@@ -24,6 +24,8 @@
                                 <th>Tanggal</th>
                                 <th>Prodi</th>
                                 <th>Status</th>
+                                <th>Pesan Admin</th>
+
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -46,6 +48,9 @@
                                         @elseif($row->status == 'Ditolak')
                                             <span class="badge bg-danger">Ditolak</span>
                                         @endif
+                                    </td>
+                                    <td>
+                                        {{ $row->pesan }}
                                     </td>
 
                                     <td>
