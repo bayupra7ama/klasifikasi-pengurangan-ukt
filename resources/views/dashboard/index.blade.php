@@ -28,6 +28,18 @@
                 </div>
             </div>
 
+            <div class="card w-100">
+                <div class="card-body">
+                    <h5 class="card-title fw-semibold mb-4">Belum Dilihat</h5>
+                    <h2 class="fw-bold">{{ $belumDilihat }}</h2>
+                    <a href="{{ route('admin.pengajuan.riwayat', ['status' => 'Terkirim']) }}"
+                        class="mt-3 d-inline-block">Selengkapnya →</a>
+                </div>
+            </div>
+
+
+
+
         </div>
 
         {{-- Line Chart Kecil --}}
@@ -36,10 +48,6 @@
                 <div class="card-body">
                     <h5 class="card-title fw-semibold mb-4">Tren Pengajuan Bulanan</h5>
                     <div id="chart_bulanan"></div>
-
-                    <a href="{{ route('admin.pengajuan.statistik') }}" class="mt-3 d-inline-block items-center">
-                        Selengkapnya →
-                    </a>
                 </div>
             </div>
         </div>

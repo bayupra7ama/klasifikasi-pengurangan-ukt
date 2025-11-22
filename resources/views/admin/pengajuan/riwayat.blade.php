@@ -43,7 +43,10 @@
                                 <th>Prodi</th>
                                 <th>Status</th>
                                 <th>Tgl Pengajuan</th>
+                                <th>Pesan Admin</th>
                                 <th>Aksi</th>
+
+
                             </tr>
                         </thead>
 
@@ -69,12 +72,25 @@
 
                                     <td>{{ $p->created_at->format('d M Y') }}</td>
 
+
+
+                                    <td>
+                                        @if ($p->pesan)
+                                            <span class="text-muted" style="font-size: 12px;">
+                                                {{ Str::limit($p->pesan, 25) }}
+                                            </span>
+                                        @else
+                                            <span class="text-muted">-</span>
+                                        @endif
+                                    </td>
+
                                     <td>
                                         <a href="{{ route('admin.pengajuan.show', $p->id) }}"
                                             class="btn btn-sm btn-outline-primary">
                                             Detail
                                         </a>
                                     </td>
+
                                 </tr>
                             @empty
                                 <tr>
@@ -88,7 +104,7 @@
                 </div>
 
                 {{-- Pagination --}}
-                <div class="mt-3">
+                <div class="pagination-wrapper mt-3">
                     {{ $pengajuan->links() }}
                 </div>
 
@@ -97,4 +113,37 @@
 
     </div>
 
+
+
+    @push('styles')
+        <style>
+            /* container pagination */
+            nav[role="navigation"]>div:first-child,
+            nav[role="navigation"]>div:nth-child(2) {
+                font-size: 10px !important;
+            }
+
+            /* tombol prev/next */
+            nav[role="navigation"] button,
+            nav[role="navigation"] a,
+            nav[role="navigation"] span {
+                font-size: 10px !important;
+                padding: 3px 6px !important;
+                min-width: 24px !important;
+                height: 24px !important;
+                line-height: 1 !important;
+
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+
+                border-radius: 4px !important;
+            }
+
+            /* hilangkan gap besar default tailwind */
+            nav[role="navigation"] .flex {
+                gap: 2px !important;
+            }
+        </style>
+    @endpush
 @endsection

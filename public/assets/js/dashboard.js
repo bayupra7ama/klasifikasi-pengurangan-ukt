@@ -252,3 +252,5 @@ document.getElementById("penghasilan").addEventListener("input", function () {
     let val = this.value.replace(/\D/g, "");
     this.value = new Intl.NumberFormat("id-ID").format(val);
 });
+
+

@@ -19,9 +19,11 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AdminSeeder::class,
             PengajuanKeringananSeeder::class,
+            PengajuanSeeder::class,
+
 
         ]);
-        
+
 
     }
 }

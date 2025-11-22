@@ -43,20 +43,20 @@
                     </li>
 
                     <li class="sidebar-item">
-                        <a class="sidebar-link {{ request()->is('admin/pengajuan/list') ? 'active' : '' }}"
-                            href="{{ route('admin.pengajuan.list') }}">
+                        <a class="sidebar-link {{ request()->is('admin.pengajuan.riwayat') ? 'active' : '' }}"
+                            href="{{ route('admin.pengajuan.riwayat') }}">
                             <span><i class="ti ti-article"></i></span>
                             <span class="hide-menu">Data Pengajuan</span>
                         </a>
                     </li>
 
-                    <li class="sidebar-item">
+                    {{-- <li class="sidebar-item">
                         <a class="sidebar-link {{ request()->is('admin/pengajuan/statistik') ? 'active' : '' }}"
                             href="{{ route('admin.pengajuan.statistik') }}">
                             <span><i class="ti ti-chart-bar"></i></span>
                             <span class="hide-menu">Statistik Pengajuan</span>
                         </a>
-                    </li>
+                    </li> --}}
                 @endif
 
 

@@ -73,7 +73,7 @@
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label>Bekerja Sebagai Ayah</label >
+                            <label>Bekerja Sebagai Ayah</label>
                             <input class="form-control" name="bekerja_sebagai_ayah">
                         </div>
 
@@ -96,7 +96,7 @@
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label>Jumlah Tanggungan</label >
+                            <label>Jumlah Tanggungan</label>
                             <input type="number" class="form-control" name="jumlah_tanggungan" required>
                         </div>
 
@@ -245,11 +245,13 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label>Penghasilan Ayah/Wali (Rp)</label>
-                            <input type="text" id="penghasilan" class="form-control rupiah" name="penghasilan_ayah" required>
+                            <input type="text" id="penghasilan" class="form-control rupiah" name="penghasilan_ayah"
+                                required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label>Penghasilan Ibu (Rp)</label>
-                            <input type="text" id="penghasilan" class="form-control rupiah" name="penghasilan_ibu" required>
+                            <input type="text" id="penghasilan" class="form-control rupiah" name="penghasilan_ibu"
+                                required>
                         </div>
 
                         <div class="col-md-6 mb-3">
@@ -258,7 +260,8 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label>Cicilan Hutang per Bulan (Rp)</label>
-                            <input type="text" id="penghasilan" class="form-control rupiah" name="cicilan_perbulan" required>
+                            <input type="text" id="penghasilan" class="form-control rupiah" name="cicilan_perbulan"
+                                required>
                         </div>
 
                         <div class="col-md-6 mb-3">
@@ -300,5 +303,6 @@
             <div class="text-end mb-5">
                 <button type="submit" class="btn btn-primary px-4 py-2 fw-bold">Kirim Pengajuan</button>
             </div>
+        </form> <!-- <<< HARUS ADA -->
 
-        @endsection
+    @endsection

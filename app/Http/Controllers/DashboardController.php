@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pengajuan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +15,9 @@ class DashboardController extends Controller
         // ===============================
         // CARD — TOTAL PENGAJUAN
         // ===============================
-        $totalPengajuan = PengajuanKeringanan::count();
+        $totalPengajuan = Pengajuan::count();
+
+        $belumDilihat = Pengajuan::where('status', 'Terkirim')->count();
 
         // ===============================
         // PIE KECIL — Layak vs Tidak Layak
@@ -25,7 +28,7 @@ class DashboardController extends Controller
         // ===============================
         // LINE KECIL — Pengajuan per Bulan
         // ===============================
-        $pengajuanBulanan = PengajuanKeringanan::select(
+        $pengajuanBulanan = Pengajuan::select(
             DB::raw("MONTH(created_at) as bulan"),
             DB::raw("COUNT(*) as total")
         )
@@ -45,6 +48,8 @@ class DashboardController extends Controller
 
             'layak' => $layak,
             'tidakLayak' => $tidakLayak,
+            'belumDilihat' => $belumDilihat,
+
 
             'bulan' => $bulan,
             'totalBulanan' => $totalBulanan,

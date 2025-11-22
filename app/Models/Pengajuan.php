@@ -41,12 +41,14 @@ class Pengajuan extends Model
         'cicilan_per_bulan',
         'piutang',
         'tabungan',
-        'sepeda_motor',
         'mobil',
+        'sepeda_motor',
         'kebun_hektar',
         'status',
-        'catatan_admin'
+        'catatan_admin',
+        'pesan'
     ];
+
 
     public function user()
     {

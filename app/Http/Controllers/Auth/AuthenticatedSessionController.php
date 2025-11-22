@@ -42,7 +42,7 @@ class AuthenticatedSessionController extends Controller
             return redirect()->route('admin.dashboard');
         }
 
-        return redirect('/'); // mahasiswa / user biasa
+        return redirect('/dashboard'); // mahasiswa / user biasa
     }
 
     /**
