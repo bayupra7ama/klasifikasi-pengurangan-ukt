@@ -1,59 +1,215 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<div align="center">
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# 🎓 UKT Reduction Classification
 
-## About Laravel
+### Decision-support system for tuition reduction applications using Laravel and C5.0 classification
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+[![Laravel](https://img.shields.io/badge/Laravel-12-FF2D20?logo=laravel&logoColor=white)](https://laravel.com/)
+[![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?logo=php&logoColor=white)](https://www.php.net/)
+[![R](https://img.shields.io/badge/Model-R%20%2B%20C5.0-276DC3?logo=r&logoColor=white)](https://www.r-project.org/)
+[![API](https://img.shields.io/badge/Integration-REST%20API-009688)](#system-architecture)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+</div>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Overview
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+This project is a web-based decision-support system for **UKT (Uang Kuliah Tunggal) reduction applications**.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+The application combines a Laravel 12 web interface with an external classification service built in R. Student socioeconomic data is sent to the prediction API, where a C5.0 model classifies the submission and returns both the predicted class and probability values.
 
-## Laravel Sponsors
+The system also provides authenticated student submission workflows and an administrative dashboard for reviewing application data and managing application status.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Key Features
 
-### Premium Partners
+### Student / User
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- Authentication and profile management
+- Submit UKT reduction applications
+- View application details and history
+- Track application status
+- Access prediction form
+- Display classification result and confidence probabilities
 
-## Contributing
+### Administrator
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Protected admin dashboard
+- View incoming UKT applications
+- View application detail
+- Update application status
+- View historical applications
+- View application statistics / charts
 
-## Code of Conduct
+### Classification
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Input features used by the prediction workflow include:
 
-## Security Vulnerabilities
+- parent / household income
+- number of dependents
+- parent occupation
+- child status
+- housing status
+- DTKS status
+- SKTM status
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+The Laravel application sends normalized input data to the R prediction service and maps the returned class into **eligible / not eligible** results.
 
-## License
+## System Architecture
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```mermaid
+flowchart LR
+    U[Student / Admin] --> W[Laravel 12 Web App]
+    W --> A[Authentication & Application Workflow]
+    W --> P[Prediction Controller]
+    P -->|JSON / HTTP| R[R Classification API]
+    R --> M[C5.0 Model]
+    M --> R
+    R -->|Prediction + Probabilities| P
+    W --> D[(Application Database)]
+```
+
+## Related Classification API
+
+The classification service is maintained separately:
+
+**[C5.0 UKT Classification API →](https://github.com/bayupra7ama/klasifikasi-pengurangan-menggunanakan-model-C50-ukt-api)**
+
+For local development, the Laravel application currently expects the prediction service at:
+
+```text
+http://127.0.0.1:5000/predict
+```
+
+## Tech Stack
+
+| Area | Technology |
+| --- | --- |
+| Web Framework | Laravel 12 |
+| Language | PHP 8.2+ |
+| Authentication | Laravel Breeze |
+| UI | Blade + Vite |
+| Database | Laravel-supported relational database |
+| HTTP Integration | Laravel HTTP Client |
+| Classification Service | R REST API |
+| Machine Learning | C5.0 classification |
+| Testing | PHPUnit |
+
+## Main Project Structure
+
+```text
+app/
+├── Http/
+│   ├── Controllers/
+│   │   ├── PredictController.php
+│   │   ├── PengajuanController.php
+│   │   ├── DashboardController.php
+│   │   └── UserDashboardController.php
+│   └── Middleware/
+│       └── IsAdmin.php
+├── Models/
+│   ├── Pengajuan.php
+│   ├── PengajuanKeringanan.php
+│   └── User.php
+
+resources/views/
+├── admin/
+├── pengajuan/
+├── user/
+├── dashboard/
+└── prediksi.blade.php
+
+routes/
+└── web.php
+```
+
+## Application Flow
+
+```mermaid
+flowchart TD
+    A[User Login] --> B[Student Dashboard]
+    B --> C[Fill Application]
+    C --> D[Submit Application]
+    B --> E[Prediction Form]
+    E --> F[Normalize Socioeconomic Data]
+    F --> G[Send to R API]
+    G --> H[C5.0 Prediction]
+    H --> I[Eligibility + Probability]
+    D --> J[Admin Review]
+    J --> K[Update Application Status]
+```
+
+## Installation
+
+### Requirements
+
+- PHP 8.2+
+- Composer
+- Node.js & npm
+- Database supported by Laravel
+- Running R classification API
+
+### 1. Clone
+
+```bash
+git clone https://github.com/bayupra7ama/klasifikasi-pengurangan-ukt.git
+cd klasifikasi-pengurangan-ukt
+```
+
+### 2. Install dependencies
+
+```bash
+composer install
+npm install
+```
+
+### 3. Environment
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+Configure your database connection in `.env`.
+
+### 4. Prepare database
+
+```bash
+php artisan migrate
+php artisan db:seed
+```
+
+### 5. Start the classification API
+
+Clone and run the companion R API before using prediction functionality:
+
+```text
+https://github.com/bayupra7ama/klasifikasi-pengurangan-menggunanakan-model-C50-ukt-api
+```
+
+Ensure the prediction endpoint is reachable by the Laravel application.
+
+### 6. Run Laravel
+
+```bash
+composer run dev
+```
+
+Or:
+
+```bash
+php artisan serve
+npm run dev
+```
+
+## Important Note
+
+The prediction result is designed as **decision-support output**. Final administrative decisions should still follow the applicable institution's policies, verification process, and supporting documents.
+
+---
+
+<div align="center">
+
+Built to connect web application workflows with practical machine-learning classification.
+
+</div>
